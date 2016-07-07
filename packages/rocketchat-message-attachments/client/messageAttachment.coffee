@@ -1,14 +1,13 @@
 Template.messageAttachment.helpers
 	fixCordova: (url) ->
 		if Meteor.isCordova and url?[0] is '/'
-			url = Meteor.absoluteUrl().replace(/\/$/, '') + url
+			url = Meteor.absoluteUrl().replace(/\/$/, '') + __meteor_runtime_config__.ROOT_URL_PATH_PREFIX + url
 			query = "rc_uid=#{Meteor.userId()}&rc_token=#{Meteor._localStorage.getItem('Meteor.loginToken')}"
 			if url.indexOf('?') is -1
 				url = url + '?' + query
 			else
 				url = url + '&' + query
-
-		return Meteor.absoluteUrl().replace(/\/$/, '') + __meteor_runtime_config__.ROOT_URL_PATH_PREFIX + url
+		return url
 
 	parsedText: ->
 		renderMessageBody { msg: this.text }
